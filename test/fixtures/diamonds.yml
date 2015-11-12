@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  date: 2015-11-12
+  weight: 1.5
+  color: MyString
+  clar: MyString
+  start_price: 1.5
+  end_price: 1.5
+  low_price: 1.5
+  high_price: 1.5
+
+two:
+  date: 2015-11-12
+  weight: 1.5
+  color: MyString
+  clar: MyString
+  start_price: 1.5
+  end_price: 1.5
+  low_price: 1.5
+  high_price: 1.5
