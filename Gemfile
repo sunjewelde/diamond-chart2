@@ -27,6 +27,12 @@ gem 'bootstrap-sass'
 
 gem 'lazy_high_charts'
 
+gem 'kaminari'
+
+gem 'ransack'
+
+gem 'pry-byebug', group: :development
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
