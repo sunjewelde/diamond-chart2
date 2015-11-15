@@ -8,15 +8,9 @@ class DiamondsController < ApplicationController
     #kaminariでページネーション
     @diamonds = Diamond.page(params[:page])
     
- 
-    #indexページからグラフ描画の引数を取得
-    weight =
-    color =
-    clar =
-    start_date =
-    end_date =
-    min_price =
-    max_price =
+    @q = Diamond.ransack(params[:q])
+    @diamonds2 = @q.result(distinct: true)
+   
     
     
     weight_group_03_color_D_IF = Diamond.where(weight: 0.3).where(color: "D").where(clar: "IF")
@@ -809,7 +803,7 @@ class DiamondsController < ApplicationController
     weight_group_03_color_D_VS1_end_price = weight_group_03_color_D_VS1.pluck(:end_price)
     weight_group_03_color_D_VS2_end_price = weight_group_03_color_D_VS2.pluck(:end_price)
     weight_group_03_color_D_SI1_end_price = weight_group_03_color_D_SI1.pluck(:end_price)
-     weight_group_03_color_D_SI2_end_price = weight_group_03_color_D_SI2.pluck(:end_price)
+    weight_group_03_color_D_SI2_end_price = weight_group_03_color_D_SI2.pluck(:end_price)
 
     weight_group_03_color_E_IF_end_price = weight_group_03_color_E_IF.pluck(:end_price)
     weight_group_03_color_E_VVS1_end_price = weight_group_03_color_E_VVS1.pluck(:end_price)
@@ -909,6 +903,271 @@ class DiamondsController < ApplicationController
     @diamond = Diamond.new(diamond_params)
     @diamond.save
     redirect_to root_path , notice: 'データを保存しました'
+  end
+  
+  
+  def chart
+    #indexページからグラフ描画の引数を取得
+    weight = params[:q][:weight]
+    color = params[:q][:color]
+    clar = params[:q][:clar]
+    date = params[:q][:date]
+    
+    #For ransack
+    @q = Diamond.ransack(params[:q])
+    
+    #Weightでソート
+    @diamonds = Diamond.ransack(:weight_eq => weight).result(distinct: true)
+    
+    @diamonds_D = @diamonds.ransack(:color_eq => "D").result(distinct: true)
+    @diamonds_E = @diamonds.ransack(:color_eq => "E").result(distinct: true)
+    @diamonds_F = @diamonds.ransack(:color_eq => "F").result(distinct: true)
+    @diamonds_G = @diamonds.ransack(:color_eq => "G").result(distinct: true)
+    @diamonds_H = @diamonds.ransack(:color_eq => "H").result(distinct: true)
+    @diamonds_I = @diamonds.ransack(:color_eq => "I").result(distinct: true)
+    @diamonds_J = @diamonds.ransack(:color_eq => "J").result(distinct: true)
+    @diamonds_K = @diamonds.ransack(:color_eq => "K").result(distinct: true)
+    @diamonds_L = @diamonds.ransack(:color_eq => "L").result(distinct: true)
+    @diamonds_M = @diamonds.ransack(:color_eq => "M").result(distinct: true)
+    
+    #Weight+Colorでソート
+    @diamonds_color = @diamonds.ransack(:color_eq => color).result(distinct: true)
+    
+    if_end_price = @diamonds_color.ransack(:clar_eq => "IF").result.pluck(:end_price)
+    vvs1_end_price = @diamonds_color.ransack(:clar_eq => "VVS1").result.pluck(:end_price)
+    vvs2_end_price = @diamonds_color.ransack(:clar_eq => "VVS2").result.pluck(:end_price)
+    vs1_end_price = @diamonds_color.ransack(:clar_eq => "VS1").result.pluck(:end_price)
+    vs2_end_price = @diamonds_color.ransack(:clar_eq => "VS2").result.pluck(:end_price)
+    si1_end_price = @diamonds_color.ransack(:clar_eq => "SI1").result.pluck(:end_price)
+    si2_end_price = @diamonds_color.ransack(:clar_eq => "SI2").result.pluck(:end_price)
+    
+    #Weight+Color+clarでソート
+    @diamonds_clar = @diamonds_color.ransack(:clar_eq => clar).result(distinct: true)
+    
+    clar_end_price = @diamonds_clar.pluck(:end_price)
+
+    # binding.pry
+    
+    
+    
+    #Date
+    date2 = @diamonds.pluck(:date)
+    
+    #color_D
+    color_D_IF_end_price = @diamonds_D.ransack(:clar_eq => "IF").result.pluck(:end_price)
+    color_D_VVS1_end_price = @diamonds_D.ransack(:clar_eq => "VVS1").result.pluck(:end_price)
+    color_D_VVS2_end_price = @diamonds_D.ransack(:clar_eq => "VVS2").result.pluck(:end_price)
+    color_D_VS1_end_price = @diamonds_D.ransack(:clar_eq => "VS1").result.pluck(:end_price)
+    color_D_VS2_end_price = @diamonds_D.ransack(:clar_eq => "VS2").result.pluck(:end_price)
+    color_D_SI1_end_price = @diamonds_D.ransack(:clar_eq => "SI1").result.pluck(:end_price)
+    color_D_SI2_end_price = @diamonds_D.ransack(:clar_eq => "SI2").result.pluck(:end_price)
+    
+    #color_E
+    color_E_IF_end_price = @diamonds_E.ransack(:clar_eq => "IF").result.pluck(:end_price)
+    color_E_VVS1_end_price = @diamonds_E.ransack(:clar_eq => "VVS1").result.pluck(:end_price)
+    color_E_VVS2_end_price = @diamonds_E.ransack(:clar_eq => "VVS2").result.pluck(:end_price)
+    color_E_VS1_end_price = @diamonds_E.ransack(:clar_eq => "VS1").result.pluck(:end_price)
+    color_E_VS2_end_price = @diamonds_E.ransack(:clar_eq => "VS2").result.pluck(:end_price)
+    color_E_SI1_end_price = @diamonds_E.ransack(:clar_eq => "SI1").result.pluck(:end_price)
+    color_E_SI2_end_price = @diamonds_E.ransack(:clar_eq => "SI2").result.pluck(:end_price)
+    
+    #color_F
+    color_F_IF_end_price = @diamonds_F.ransack(:clar_eq => "IF").result.pluck(:end_price)
+    color_F_VVS1_end_price = @diamonds_F.ransack(:clar_eq => "VVS1").result.pluck(:end_price)
+    color_F_VVS2_end_price = @diamonds_F.ransack(:clar_eq => "VVS2").result.pluck(:end_price)
+    color_F_VS1_end_price = @diamonds_F.ransack(:clar_eq => "VS1").result.pluck(:end_price)
+    color_F_VS2_end_price = @diamonds_F.ransack(:clar_eq => "VS2").result.pluck(:end_price)
+    color_F_SI1_end_price = @diamonds_F.ransack(:clar_eq => "SI1").result.pluck(:end_price)
+    color_F_SI2_end_price = @diamonds_F.ransack(:clar_eq => "SI2").result.pluck(:end_price)
+    
+    #color_G
+    color_G_IF_end_price = @diamonds_G.ransack(:clar_eq => "IF").result.pluck(:end_price)
+    color_G_VVS1_end_price = @diamonds_G.ransack(:clar_eq => "VVS1").result.pluck(:end_price)
+    color_G_VVS2_end_price = @diamonds_G.ransack(:clar_eq => "VVS2").result.pluck(:end_price)
+    color_G_VS1_end_price = @diamonds_G.ransack(:clar_eq => "VS1").result.pluck(:end_price)
+    color_G_VS2_end_price = @diamonds_G.ransack(:clar_eq => "VS2").result.pluck(:end_price)
+    color_G_SI1_end_price = @diamonds_G.ransack(:clar_eq => "SI1").result.pluck(:end_price)
+    color_G_SI2_end_price = @diamonds_G.ransack(:clar_eq => "SI2").result.pluck(:end_price)
+    
+    #color_H
+    color_H_IF_end_price = @diamonds_H.ransack(:clar_eq => "IF").result.pluck(:end_price)
+    color_H_VVS1_end_price = @diamonds_H.ransack(:clar_eq => "VVS1").result.pluck(:end_price)
+    color_H_VVS2_end_price = @diamonds_H.ransack(:clar_eq => "VVS2").result.pluck(:end_price)
+    color_H_VS1_end_price = @diamonds_H.ransack(:clar_eq => "VS1").result.pluck(:end_price)
+    color_H_VS2_end_price = @diamonds_H.ransack(:clar_eq => "VS2").result.pluck(:end_price)
+    color_H_SI1_end_price = @diamonds_H.ransack(:clar_eq => "SI1").result.pluck(:end_price)
+    color_H_SI2_end_price = @diamonds_H.ransack(:clar_eq => "SI2").result.pluck(:end_price)
+    
+    #color_I
+    color_I_IF_end_price = @diamonds_I.ransack(:clar_eq => "IF").result.pluck(:end_price)
+    color_I_VVS1_end_price = @diamonds_I.ransack(:clar_eq => "VVS1").result.pluck(:end_price)
+    color_I_VVS2_end_price = @diamonds_I.ransack(:clar_eq => "VVS2").result.pluck(:end_price)
+    color_I_VS1_end_price = @diamonds_I.ransack(:clar_eq => "VS1").result.pluck(:end_price)
+    color_I_VS2_end_price = @diamonds_I.ransack(:clar_eq => "VS2").result.pluck(:end_price)
+    color_I_SI1_end_price = @diamonds_I.ransack(:clar_eq => "SI1").result.pluck(:end_price)
+    color_I_SI2_end_price = @diamonds_I.ransack(:clar_eq => "SI2").result.pluck(:end_price)
+    
+    #color_J
+    color_J_IF_end_price = @diamonds_J.ransack(:clar_eq => "IF").result.pluck(:end_price)
+    color_J_VVS1_end_price = @diamonds_J.ransack(:clar_eq => "VVS1").result.pluck(:end_price)
+    color_J_VVS2_end_price = @diamonds_J.ransack(:clar_eq => "VVS2").result.pluck(:end_price)
+    color_J_VS1_end_price = @diamonds_J.ransack(:clar_eq => "VS1").result.pluck(:end_price)
+    color_J_VS2_end_price = @diamonds_J.ransack(:clar_eq => "VS2").result.pluck(:end_price)
+    color_J_SI1_end_price = @diamonds_J.ransack(:clar_eq => "SI1").result.pluck(:end_price)
+    color_J_SI2_end_price = @diamonds_J.ransack(:clar_eq => "SI2").result.pluck(:end_price)
+    
+    #color_K
+    color_K_IF_end_price = @diamonds_K.ransack(:clar_eq => "IF").result.pluck(:end_price)
+    color_K_VVS1_end_price = @diamonds_K.ransack(:clar_eq => "VVS1").result.pluck(:end_price)
+    color_K_VVS2_end_price = @diamonds_K.ransack(:clar_eq => "VVS2").result.pluck(:end_price)
+    color_K_VS1_end_price = @diamonds_K.ransack(:clar_eq => "VS1").result.pluck(:end_price)
+    color_K_VS2_end_price = @diamonds_K.ransack(:clar_eq => "VS2").result.pluck(:end_price)
+    color_K_SI1_end_price = @diamonds_K.ransack(:clar_eq => "SI1").result.pluck(:end_price)
+    color_K_SI2_end_price = @diamonds_K.ransack(:clar_eq => "SI2").result.pluck(:end_price)
+    
+    #color_L
+    color_L_IF_end_price = @diamonds_L.ransack(:clar_eq => "IF").result.pluck(:end_price)
+    color_L_VVS1_end_price = @diamonds_L.ransack(:clar_eq => "VVS1").result.pluck(:end_price)
+    color_L_VVS2_end_price = @diamonds_L.ransack(:clar_eq => "VVS2").result.pluck(:end_price)
+    color_L_VS1_end_price = @diamonds_L.ransack(:clar_eq => "VS1").result.pluck(:end_price)
+    color_L_VS2_end_price = @diamonds_L.ransack(:clar_eq => "VS2").result.pluck(:end_price)
+    color_L_SI1_end_price = @diamonds_L.ransack(:clar_eq => "SI1").result.pluck(:end_price)
+    color_L_SI2_end_price = @diamonds_L.ransack(:clar_eq => "SI2").result.pluck(:end_price)
+    
+    #color_M
+    color_M_IF_end_price = @diamonds_M.ransack(:clar_eq => "IF").result.pluck(:end_price)
+    color_M_VVS1_end_price = @diamonds_M.ransack(:clar_eq => "VVS1").result.pluck(:end_price)
+    color_M_VVS2_end_price = @diamonds_M.ransack(:clar_eq => "VVS2").result.pluck(:end_price)
+    color_M_VS1_end_price = @diamonds_M.ransack(:clar_eq => "VS1").result.pluck(:end_price)
+    color_M_VS2_end_price = @diamonds_M.ransack(:clar_eq => "VS2").result.pluck(:end_price)
+    color_M_SI1_end_price = @diamonds_M.ransack(:clar_eq => "SI1").result.pluck(:end_price)
+    color_M_SI2_end_price = @diamonds_M.ransack(:clar_eq => "SI2").result.pluck(:end_price)
+    
+
+    # binding.pry
+    @chart = LazyHighCharts::HighChart.new('graph') do |f|
+      # binding.pry
+  
+      if color == "all" and clar == "all"
+        #カラット別で表示
+          f.title(:text => "Diamond Price Chart #{weight}カラット")
+          f.xAxis(:categories => date2)
+          #D_
+          f.series(:name => "D_IF", :data => color_D_IF_end_price)
+          f.series(:name => "D_VVS1", :data => color_D_VVS1_end_price)
+          f.series(:name => "D_VVS2", :data => color_D_VVS2_end_price)
+          f.series(:name => "D_VS1", :data => color_D_VS1_end_price)
+          f.series(:name => "D_VS2", :data => color_D_VS2_end_price)
+          f.series(:name => "D_SI1", :data => color_D_SI1_end_price)
+          f.series(:name => "D_SI2", :data => color_D_SI2_end_price)
+          
+          #E_
+          f.series(:name => "E_IF", :data => color_E_IF_end_price)
+          f.series(:name => "E_VVS1", :data => color_E_VVS1_end_price)
+          f.series(:name => "E_VVS2", :data => color_E_VVS2_end_price)
+          f.series(:name => "E_VS1", :data => color_E_VS1_end_price)
+          f.series(:name => "E_VS2", :data => color_E_VS2_end_price)
+          f.series(:name => "E_SI1", :data => color_E_SI1_end_price)
+          f.series(:name => "E_SI2", :data => color_E_SI2_end_price)
+          
+          #F_
+          f.series(:name => "F_IF", :data => color_F_IF_end_price)
+          f.series(:name => "F_VVS1", :data => color_F_VVS1_end_price)
+          f.series(:name => "F_VVS2", :data => color_F_VVS2_end_price)
+          f.series(:name => "F_VS1", :data => color_F_VS1_end_price)
+          f.series(:name => "F_VS2", :data => color_F_VS2_end_price)
+          f.series(:name => "F_SI1", :data => color_F_SI1_end_price)
+          f.series(:name => "F_SI2", :data => color_F_SI2_end_price)
+          
+          #G_
+          f.series(:name => "G_IF", :data => color_G_IF_end_price)
+          f.series(:name => "G_VVS1", :data => color_G_VVS1_end_price)
+          f.series(:name => "G_VVS2", :data => color_G_VVS2_end_price)
+          f.series(:name => "G_VS1", :data => color_G_VS1_end_price)
+          f.series(:name => "G_VS2", :data => color_G_VS2_end_price)
+          f.series(:name => "G_SI1", :data => color_G_SI1_end_price)
+          f.series(:name => "G_SI2", :data => color_G_SI2_end_price)
+          
+          #H_
+          f.series(:name => "H_IF", :data => color_H_IF_end_price)
+          f.series(:name => "H_VVS1", :data => color_H_VVS1_end_price)
+          f.series(:name => "H_VVS2", :data => color_H_VVS2_end_price)
+          f.series(:name => "H_VS1", :data => color_H_VS1_end_price)
+          f.series(:name => "H_VS2", :data => color_H_VS2_end_price)
+          f.series(:name => "H_SI1", :data => color_H_SI1_end_price)
+          f.series(:name => "H_SI2", :data => color_H_SI2_end_price)
+          
+          #I_
+          f.series(:name => "I_IF", :data => color_I_IF_end_price)
+          f.series(:name => "I_VVS1", :data => color_I_VVS1_end_price)
+          f.series(:name => "I_VVS2", :data => color_I_VVS2_end_price)
+          f.series(:name => "I_VS1", :data => color_I_VS1_end_price)
+          f.series(:name => "I_VS2", :data => color_I_VS2_end_price)
+          f.series(:name => "I_SI1", :data => color_I_SI1_end_price)
+          f.series(:name => "I_SI2", :data => color_I_SI2_end_price)
+          
+          #J_
+          f.series(:name => "J_IF", :data => color_J_IF_end_price)
+          f.series(:name => "J_VVS1", :data => color_J_VVS1_end_price)
+          f.series(:name => "J_VVS2", :data => color_J_VVS2_end_price)
+          f.series(:name => "J_VS1", :data => color_J_VS1_end_price)
+          f.series(:name => "J_VS2", :data => color_J_VS2_end_price)
+          f.series(:name => "J_SI1", :data => color_J_SI1_end_price)
+          f.series(:name => "J_SI2", :data => color_J_SI2_end_price)
+          
+          #K_
+          f.series(:name => "K_IF", :data => color_K_IF_end_price)
+          f.series(:name => "K_VVS1", :data => color_K_VVS1_end_price)
+          f.series(:name => "K_VVS2", :data => color_K_VVS2_end_price)
+          f.series(:name => "K_VS1", :data => color_K_VS1_end_price)
+          f.series(:name => "K_VS2", :data => color_K_VS2_end_price)
+          f.series(:name => "K_SI1", :data => color_K_SI1_end_price)
+          f.series(:name => "K_SI2", :data => color_K_SI2_end_price)
+          
+          #L_
+          f.series(:name => "L_IF", :data => color_L_IF_end_price)
+          f.series(:name => "L_VVS1", :data => color_L_VVS1_end_price)
+          f.series(:name => "L_VVS2", :data => color_L_VVS2_end_price)
+          f.series(:name => "L_VS1", :data => color_L_VS1_end_price)
+          f.series(:name => "L_VS2", :data => color_L_VS2_end_price)
+          f.series(:name => "L_SI1", :data => color_L_SI1_end_price)
+          f.series(:name => "L_SI2", :data => color_L_SI2_end_price)
+          
+          #M_
+          f.series(:name => "M_IF", :data => color_M_IF_end_price)
+          f.series(:name => "M_VVS1", :data => color_M_VVS1_end_price)
+          f.series(:name => "M_VVS2", :data => color_M_VVS2_end_price)
+          f.series(:name => "M_VS1", :data => color_M_VS1_end_price)
+          f.series(:name => "M_VS2", :data => color_M_VS2_end_price)
+          f.series(:name => "M_SI1", :data => color_M_SI1_end_price)
+          f.series(:name => "M_SI2", :data => color_M_SI2_end_price)
+          
+          
+          f.legend(:align => 'right', :verticalAlign => 'top', :y => 75, :x => -50, :layout => 'vertical',)
+          # f.chart({:defaultSeriesType=>"column"})
+    
+        elsif color != "all" and clar == "all"
+          f.title(:text => "Diamond Price Chart #{weight}カラット")
+          f.xAxis(:categories => date2)
+          
+          f.series(:name => "#{color}_IF", :data => if_end_price)
+          f.series(:name => "#{color}_VVS1", :data => if_end_price)
+          f.series(:name => "#{color}_VVS2", :data => vvs2_end_price)
+          f.series(:name => "#{color}_VS1", :data => vs1_end_price)
+          f.series(:name => "#{color}_VS2", :data => vs2_end_price)
+          f.series(:name => "#{color}_SI1", :data => si1_end_price)
+          f.series(:name => "#{color}_SI2", :data => si2_end_price)
+          
+          f.legend(:align => 'right', :verticalAlign => 'top', :y => 75, :x => -50, :layout => 'vertical',)
+        elsif  color != "all" and clar != "all"
+          f.title(:text => "Diamond Price Chart #{weight}カラット")
+          f.xAxis(:categories => date2)
+          
+          f.series(:name => "#{color}_#{clar}", :data => clar_end_price)
+          f.legend(:align => 'right', :verticalAlign => 'top', :y => 75, :x => -50, :layout => 'vertical',)
+      end
+    end  
+    
   end
   
   private

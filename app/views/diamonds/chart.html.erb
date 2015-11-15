@@ -1,4 +1,4 @@
-<h1>Diamonds#index</h1>
+<h1>ダイヤモンド相場価格チャート</h1>
 <div class="container">
     <div id="diamonds-chart" class="user_chart">
         <%= high_chart("diamonds-chart", @chart) %>
@@ -32,30 +32,4 @@
                 <%= f.submit "チャートを表示" %>
             <% end %>
     
-
-    <div>
-        <%= page_entries_info @diamonds %>
-    </div>
-    <div>
-        <%= paginate @diamonds %>
-    </div>
-
-    <table class="table table-bordered">
-      <tr>
-        <th>Date</th>
-        <th>Weight</th>
-        <th>Color</th>
-        <th>Clar</th>
-        <th>Price</th>
-      </tr>
-      <% @diamonds.each do |diamond| %>
-        <tr>
-          <td><%= diamond.date %></td>
-          <td><%= diamond.weight %></td>
-          <td><%= diamond.color %></td>
-          <td><%= diamond.clar %></td>
-          <td><%= diamond.end_price %></td>
-        </tr>
-      <% end %>
-    </table>
 </div>
