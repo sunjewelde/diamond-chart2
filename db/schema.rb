@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151112211649) do
+ActiveRecord::Schema.define(version: 20151203212117) do
 
   create_table "diamonds", force: :cascade do |t|
     t.date     "date"
@@ -22,8 +22,17 @@ ActiveRecord::Schema.define(version: 20151112211649) do
     t.float    "end_price"
     t.float    "low_price"
     t.float    "high_price"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.datetime "datetime"
+    t.string   "cut_grade"
+    t.integer  "rapnet_list_price"
+    t.integer  "rapnet_discount"
+    t.integer  "price_per_carat"
+    t.string   "polish"
+    t.string   "symmetry"
+    t.string   "fluorescen"
+    t.string   "certificate_id"
   end
 
 end
