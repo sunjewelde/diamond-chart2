@@ -2,7 +2,7 @@ class DiamondsController < ApplicationController
   def new
     @diamond = Diamond.new
   end
-  
+
   require "date"
   def index
     # @diamonds = Diamond.all
@@ -12,23 +12,82 @@ class DiamondsController < ApplicationController
     @diamonds2 = @q.result(distinct: true)
    
    weight = [0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.2, 1.5]
-   color = ["D", "E", "F", "G", "H", "I", "J", "K", "L", "M"]
-   clar = ["IF", "VVS1", "VVS2", "VS1", "VS2", "SI1", "SI2"]
+   color = ["D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "FIY", "FLY", "FY", "Y-Z"]
+   clar = ["IF", "VVS1", "VVS2", "VS1", "VS2", "SI1", "SI2", "I1", "FL"]
+   cut_grade = ["Good", "Very Good", "Excellent", "EXC", "VGD", "F"]
+   polish = ["Excellent", "Very Good", "ex", "vg", "vgd", "gd", "exc", "Good"]
+   symmetry = ["Excellent", "Very Good", "ex", "vg", "vgd", "gd", "exc", "Good", "g", "Fair", "F"]
+   fluorescen = ["Medium", "Faint", "None", "Strong", "f", "mb", "NONE", "Medium Blue", "md blue", 
+                 "st", "sb", "str blue", "S.BLUE", "M.BLUE", "VST", "Very Strong", "V.S.BLUE", "FT"]
+
+   #最新旧の日付を取得
+   # @latest = Diamond.last
+   # @oldest = Diamond.first
+   # @latest_date = @latest.date
+   # @old_date = @oldest.date
+
+   latest = Diamond.last
+   oldest = Diamond.first
+   latest_date = latest.date
+   oldest_date = oldest.date
+   date_range =  latest_date - oldest_date
+   three_days_ago = latest_date -3
+   # if date_range >= 7
+   #     i = 7
+   #     one_week_ago = latest_date - i
+   #     if one_week_ago.presnt?
+   #        owa = one_week_ago
+   #     else
+   #      i = i + 1
+   # end
+   # end
+   
  
-   diamond_group = 
+   # @date_all = Diamond.select(:date).distinct.order(:date)
+
+   # date_all = Diamond.pluck(:date).uniq.sort
+   # weight_all = Diamond.pluck(:weight).uniq.sort
+   # color_all = Diamond.pluck(:color).uniq
+   # clar_all = Diamond.pluck(:clar).uniq
+   # cut_grade_all = Diamond.pluck(:cut_grade).uniq
+   # polish_all = Diamond.pluck(:polish).uniq
+   # symmetry_all = Diamond.pluck(:symmetry).uniq
+   # fluorescen_all = Diamond.pluck(:fluorescen).uniq
+
+   # binding.pry
   
+    # weight_group_03_color_D_IF = Diamond.date_one_week.weight(0.3).color("D").clar("IF")
+    # weight_group_03_color_E_IF = Diamond.date_one_week.weight(0.3).color("E").clar("IF")
+    # weight_group_03_color_F_IF = Diamond.date_one_week.weight(0.3).color("F").clar("IF")
+    # weight_group_03_color_G_IF = Diamond.date_one_week.weight(0.3).color("G").clar("IF")
+    # weight_group_03_color_H_IF = Diamond.date_one_week.weight(0.3).color("H").clar("IF")
+    # weight_group_03_color_I_IF = Diamond.date_one_week.weight(0.3).color("I").clar("IF")
+    # weight_group_03_color_J_IF = Diamond.date_one_week.weight(0.3).color("J").clar("IF")
+    # weight_group_03_color_K_IF = Diamond.date_one_week.weight(0.3).color("K").clar("IF")
+    # weight_group_03_color_L_IF = Diamond.date_one_week.weight(0.3).color("L").clar("IF")
+    # weight_group_03_color_M_IF = Diamond.date_one_week.weight(0.3).color("M").clar("IF")
+
+    weight_group_03_color_D_IF = Diamond.date_full_year.weight(0.3).color("D").clar("IF")
+    weight_group_03_color_E_IF = Diamond.date_full_year.weight(0.3).color("E").clar("IF")
+    weight_group_03_color_F_IF = Diamond.date_full_year.weight(0.3).color("F").clar("IF")
+    weight_group_03_color_G_IF = Diamond.date_full_year.weight(0.3).color("G").clar("IF")
+    weight_group_03_color_H_IF = Diamond.date_full_year.weight(0.3).color("H").clar("IF")
+    weight_group_03_color_I_IF = Diamond.date_full_year.weight(0.3).color("I").clar("IF")
+    weight_group_03_color_J_IF = Diamond.date_full_year.weight(0.3).color("J").clar("IF")
+    weight_group_03_color_K_IF = Diamond.date_full_year.weight(0.3).color("K").clar("IF")
+    weight_group_03_color_L_IF = Diamond.date_full_year.weight(0.3).color("L").clar("IF")
+    weight_group_03_color_M_IF = Diamond.date_full_year.weight(0.3).color("M").clar("IF")
   
-    weight_group_03_color_D_IF = Diamond.date_one_week.weight(0.3).color("D").clar("IF")
-    weight_group_03_color_E_IF = Diamond.date_one_week.weight(0.3).color("E").clar("IF")
-    weight_group_03_color_F_IF = Diamond.date_one_week.weight(0.3).color("F").clar("IF")
-    weight_group_03_color_G_IF = Diamond.date_one_week.weight(0.3).color("G").clar("IF")
-    weight_group_03_color_H_IF = Diamond.date_one_week.weight(0.3).color("H").clar("IF")
-    weight_group_03_color_I_IF = Diamond.date_one_week.weight(0.3).color("I").clar("IF")
-    weight_group_03_color_J_IF = Diamond.date_one_week.weight(0.3).color("J").clar("IF")
-    weight_group_03_color_K_IF = Diamond.date_one_week.weight(0.3).color("K").clar("IF")
-    weight_group_03_color_L_IF = Diamond.date_one_week.weight(0.3).color("L").clar("IF")
-    weight_group_03_color_M_IF = Diamond.date_one_week.weight(0.3).color("M").clar("IF")
-  
+    # weight_group_03_color_D_IF = Diamond.weight(0.3).color("D").clar("IF")
+    # weight_group_03_color_E_IF = Diamond.weight(0.3).color("E").clar("IF")
+    # weight_group_03_color_F_IF = Diamond.weight(0.3).color("F").clar("IF")
+    # weight_group_03_color_G_IF = Diamond.weight(0.3).color("G").clar("IF")
+    # weight_group_03_color_H_IF = Diamond.weight(0.3).color("H").clar("IF")
+    # weight_group_03_color_I_IF = Diamond.weight(0.3).color("I").clar("IF")
+    # weight_group_03_color_J_IF = Diamond.weight(0.3).color("J").clar("IF")
+    # weight_group_03_color_K_IF = Diamond.weight(0.3).color("K").clar("IF")
+    # weight_group_03_color_L_IF = Diamond.weight(0.3).color("L").clar("IF")
+    # weight_group_03_color_M_IF = Diamond.weight(0.3).color("M").clar("IF")
   
     
     # weight_group_03_color_D_IF = Diamond.where(weight: 0.3).where(color: "D").where(clar: "IF")
@@ -112,7 +171,8 @@ class DiamondsController < ApplicationController
     
     #0.3_All
     #Date
-    weight_group_03_color_D_IF_date = weight_group_03_color_D_IF.pluck(:date)
+    weight_group_03_color_D_IF_date = weight_group_03_color_D_IF.pluck(:date).uniq
+    # binding.pry
     #Price_0.3
     weight_group_03_color_D_IF_end_price = weight_group_03_color_D_IF.pluck(:end_price)
     weight_group_03_color_D_VVS1_end_price = weight_group_03_color_D_VVS1.pluck(:end_price)
