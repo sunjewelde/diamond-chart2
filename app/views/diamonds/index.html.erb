@@ -34,27 +34,29 @@
     
 
     <div>
-        <%= page_entries_info @diamonds %>
+        <#%= page_entries_info @diamonds %>
     </div>
     <div>
-        <%= paginate @diamonds %>
+        <#%= paginate @diamonds %>
     </div>
-
+    <<div>
+      <%=  %>
+    </div>
     <table class="table table-bordered">
       <tr>
         <th>Date</th>
         <th>Weight</th>
         <th>Color</th>
-        <th>Clar</th>
+        <th>Clarity</th>
         <th>Price</th>
       </tr>
-      <% @diamonds.each do |diamond| %>
+      <% @daily_weight_group_03_color_D_IF.each do |diamond| %>
         <tr>
           <td><%= diamond.date %></td>
-          <td><%= diamond.weight %></td>
+          <td><#%= diamond.weight %></td>
           <td><%= diamond.color %></td>
           <td><%= diamond.clar %></td>
-          <td><%= diamond.end_price %></td>
+          <td><%= diamond.avg_price.round %></td>
         </tr>
       <% end %>
     </table>

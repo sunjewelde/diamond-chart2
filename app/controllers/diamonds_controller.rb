@@ -67,16 +67,38 @@ class DiamondsController < ApplicationController
     # weight_group_03_color_L_IF = Diamond.date_one_week.weight(0.3).color("L").clar("IF")
     # weight_group_03_color_M_IF = Diamond.date_one_week.weight(0.3).color("M").clar("IF")
 
-    weight_group_03_color_D_IF = Diamond.date_full_year.weight(0.3).color("D").clar("IF")
-    weight_group_03_color_E_IF = Diamond.date_full_year.weight(0.3).color("E").clar("IF")
-    weight_group_03_color_F_IF = Diamond.date_full_year.weight(0.3).color("F").clar("IF")
-    weight_group_03_color_G_IF = Diamond.date_full_year.weight(0.3).color("G").clar("IF")
-    weight_group_03_color_H_IF = Diamond.date_full_year.weight(0.3).color("H").clar("IF")
-    weight_group_03_color_I_IF = Diamond.date_full_year.weight(0.3).color("I").clar("IF")
-    weight_group_03_color_J_IF = Diamond.date_full_year.weight(0.3).color("J").clar("IF")
-    weight_group_03_color_K_IF = Diamond.date_full_year.weight(0.3).color("K").clar("IF")
-    weight_group_03_color_L_IF = Diamond.date_full_year.weight(0.3).color("L").clar("IF")
-    weight_group_03_color_M_IF = Diamond.date_full_year.weight(0.3).color("M").clar("IF")
+    # weight_group_03_color_D_IF = Diamond.date_full_year.weight(0.3).color("D").clar("IF")
+    # weight_group_03_color_E_IF = Diamond.date_full_year.weight(0.3).color("E").clar("IF")
+    # weight_group_03_color_F_IF = Diamond.date_full_year.weight(0.3).color("F").clar("IF")
+    # weight_group_03_color_G_IF = Diamond.date_full_year.weight(0.3).color("G").clar("IF")
+    # weight_group_03_color_H_IF = Diamond.date_full_year.weight(0.3).color("H").clar("IF")
+    # weight_group_03_color_I_IF = Diamond.date_full_year.weight(0.3).color("I").clar("IF")
+    # weight_group_03_color_J_IF = Diamond.date_full_year.weight(0.3).color("J").clar("IF")
+    # weight_group_03_color_K_IF = Diamond.date_full_year.weight(0.3).color("K").clar("IF")
+    # weight_group_03_color_L_IF = Diamond.date_full_year.weight(0.3).color("L").clar("IF")
+    # weight_group_03_color_M_IF = Diamond.date_full_year.weight(0.3).color("M").clar("IF")
+
+    weight_group_03_color_D_IF = Diamond.date_one_week.weight03.color("D").clar("IF")
+    weight_group_03_color_E_IF = Diamond.date_one_week.weight03.color("E").clar("IF")
+    weight_group_03_color_F_IF = Diamond.date_one_week.weight03.color("F").clar("IF")
+    weight_group_03_color_G_IF = Diamond.date_one_week.weight03.color("G").clar("IF")
+    weight_group_03_color_H_IF = Diamond.date_one_week.weight03.color("H").clar("IF")
+    weight_group_03_color_I_IF = Diamond.date_one_week.weight03.color("I").clar("IF")
+    weight_group_03_color_J_IF = Diamond.date_one_week.weight03.color("J").clar("IF")
+    weight_group_03_color_K_IF = Diamond.date_one_week.weight03.color("K").clar("IF")
+    weight_group_03_color_L_IF = Diamond.date_one_week.weight03.color("L").clar("IF")
+    weight_group_03_color_M_IF = Diamond.date_one_week.weight03.color("M").clar("IF")
+
+    @daily_weight_group_03_color_D_IF = weight_group_03_color_D_IF.select('date, color, clar, AVG(end_price) AS avg_price').group(:date)
+    @daily_weight_group_03_color_E_IF = weight_group_03_color_E_IF.select('date, color, clar, AVG(end_price) AS avg_price').group(:date)
+    @daily_weight_group_03_color_F_IF = weight_group_03_color_F_IF.select('date, color, clar, AVG(end_price) AS avg_price').group(:date)
+    @daily_weight_group_03_color_G_IF = weight_group_03_color_G_IF.select('date, color, clar, AVG(end_price) AS avg_price').group(:date)
+    @daily_weight_group_03_color_H_IF = weight_group_03_color_H_IF.select('date, color, clar, AVG(end_price) AS avg_price').group(:date)
+    @daily_weight_group_03_color_I_IF = weight_group_03_color_I_IF.select('date, color, clar, AVG(end_price) AS avg_price').group(:date)
+    @daily_weight_group_03_color_J_IF = weight_group_03_color_J_IF.select('date, color, clar, AVG(end_price) AS avg_price').group(:date)
+    @daily_weight_group_03_color_K_IF = weight_group_03_color_K_IF.select('date, color, clar, AVG(end_price) AS avg_price').group(:date)
+    @daily_weight_group_03_color_L_IF = weight_group_03_color_L_IF.select('date, color, clar, AVG(end_price) AS avg_price').group(:date)
+    @daily_weight_group_03_color_M_IF = weight_group_03_color_M_IF.select('date, color, clar, AVG(end_price) AS avg_price').group(:date)
   
     # weight_group_03_color_D_IF = Diamond.weight(0.3).color("D").clar("IF")
     # weight_group_03_color_E_IF = Diamond.weight(0.3).color("E").clar("IF")
@@ -101,71 +123,17 @@ class DiamondsController < ApplicationController
     # weight_group_03_color_L_IF = Diamond.where(weight: 0.3).where(color: "L").where(clar: "IF")
     # weight_group_03_color_M_IF = Diamond.where(weight: 0.3).where(color: "M").where(clar: "IF")
     
-    weight_group_03_color_D_VVS1 = Diamond.where(weight: 0.3).where(color: "D").where(clar: "VVS1")
-    weight_group_03_color_E_VVS1 = Diamond.where(weight: 0.3).where(color: "E").where(clar: "VVS1")
-    weight_group_03_color_F_VVS1 = Diamond.where(weight: 0.3).where(color: "F").where(clar: "VVS1")
-    weight_group_03_color_G_VVS1 = Diamond.where(weight: 0.3).where(color: "G").where(clar: "VVS1")
-    weight_group_03_color_H_VVS1 = Diamond.where(weight: 0.3).where(color: "H").where(clar: "VVS1")
-    weight_group_03_color_I_VVS1 = Diamond.where(weight: 0.3).where(color: "I").where(clar: "VVS1")
-    weight_group_03_color_J_VVS1 = Diamond.where(weight: 0.3).where(color: "J").where(clar: "VVS1")
-    weight_group_03_color_K_VVS1 = Diamond.where(weight: 0.3).where(color: "K").where(clar: "VVS1")
-    weight_group_03_color_L_VVS1 = Diamond.where(weight: 0.3).where(color: "L").where(clar: "VVS1")
-    weight_group_03_color_M_VVS1 = Diamond.where(weight: 0.3).where(color: "M").where(clar: "VVS1")
-    
-    weight_group_03_color_D_VVS2 = Diamond.where(weight: 0.3).where(color: "D").where(clar: "VVS2")
-    weight_group_03_color_E_VVS2 = Diamond.where(weight: 0.3).where(color: "E").where(clar: "VVS2")
-    weight_group_03_color_F_VVS2 = Diamond.where(weight: 0.3).where(color: "F").where(clar: "VVS2")
-    weight_group_03_color_G_VVS2 = Diamond.where(weight: 0.3).where(color: "G").where(clar: "VVS2")
-    weight_group_03_color_H_VVS2 = Diamond.where(weight: 0.3).where(color: "H").where(clar: "VVS2")
-    weight_group_03_color_I_VVS2 = Diamond.where(weight: 0.3).where(color: "I").where(clar: "VVS2")
-    weight_group_03_color_J_VVS2 = Diamond.where(weight: 0.3).where(color: "J").where(clar: "VVS2")
-    weight_group_03_color_K_VVS2 = Diamond.where(weight: 0.3).where(color: "K").where(clar: "VVS2")
-    weight_group_03_color_L_VVS2 = Diamond.where(weight: 0.3).where(color: "L").where(clar: "VVS2")
-    weight_group_03_color_M_VVS2 = Diamond.where(weight: 0.3).where(color: "M").where(clar: "VVS2")
-    
-    weight_group_03_color_D_VS1 = Diamond.where(weight: 0.3).where(color: "D").where(clar: "VS1")
-    weight_group_03_color_E_VS1 = Diamond.where(weight: 0.3).where(color: "E").where(clar: "VS1")
-    weight_group_03_color_F_VS1 = Diamond.where(weight: 0.3).where(color: "F").where(clar: "VS1")
-    weight_group_03_color_G_VS1 = Diamond.where(weight: 0.3).where(color: "G").where(clar: "VS1")
-    weight_group_03_color_H_VS1 = Diamond.where(weight: 0.3).where(color: "H").where(clar: "VS1")
-    weight_group_03_color_I_VS1 = Diamond.where(weight: 0.3).where(color: "I").where(clar: "VS1")
-    weight_group_03_color_J_VS1 = Diamond.where(weight: 0.3).where(color: "J").where(clar: "VS1")
-    weight_group_03_color_K_VS1 = Diamond.where(weight: 0.3).where(color: "K").where(clar: "VS1")
-    weight_group_03_color_L_VS1 = Diamond.where(weight: 0.3).where(color: "L").where(clar: "VS1")
-    weight_group_03_color_M_VS1 = Diamond.where(weight: 0.3).where(color: "M").where(clar: "VS1")
-    
-    weight_group_03_color_D_VS2 = Diamond.where(weight: 0.3).where(color: "D").where(clar: "VS2")
-    weight_group_03_color_E_VS2 = Diamond.where(weight: 0.3).where(color: "E").where(clar: "VS2")
-    weight_group_03_color_F_VS2 = Diamond.where(weight: 0.3).where(color: "F").where(clar: "VS2")
-    weight_group_03_color_G_VS2 = Diamond.where(weight: 0.3).where(color: "G").where(clar: "VS2")
-    weight_group_03_color_H_VS2 = Diamond.where(weight: 0.3).where(color: "H").where(clar: "VS2")
-    weight_group_03_color_I_VS2 = Diamond.where(weight: 0.3).where(color: "I").where(clar: "VS2")
-    weight_group_03_color_J_VS2 = Diamond.where(weight: 0.3).where(color: "J").where(clar: "VS2")
-    weight_group_03_color_K_VS2 = Diamond.where(weight: 0.3).where(color: "K").where(clar: "VS2")
-    weight_group_03_color_L_VS2 = Diamond.where(weight: 0.3).where(color: "L").where(clar: "VS2")
-    weight_group_03_color_M_VS2 = Diamond.where(weight: 0.3).where(color: "M").where(clar: "VS2")
-    
-    weight_group_03_color_D_SI1 = Diamond.where(weight: 0.3).where(color: "D").where(clar: "SI1")
-    weight_group_03_color_E_SI1 = Diamond.where(weight: 0.3).where(color: "E").where(clar: "SI1")
-    weight_group_03_color_F_SI1 = Diamond.where(weight: 0.3).where(color: "F").where(clar: "SI1")
-    weight_group_03_color_G_SI1 = Diamond.where(weight: 0.3).where(color: "G").where(clar: "SI1")
-    weight_group_03_color_H_SI1 = Diamond.where(weight: 0.3).where(color: "H").where(clar: "SI1")
-    weight_group_03_color_I_SI1 = Diamond.where(weight: 0.3).where(color: "I").where(clar: "SI1")
-    weight_group_03_color_J_SI1 = Diamond.where(weight: 0.3).where(color: "J").where(clar: "SI1")
-    weight_group_03_color_K_SI1 = Diamond.where(weight: 0.3).where(color: "K").where(clar: "SI1")
-    weight_group_03_color_L_SI1 = Diamond.where(weight: 0.3).where(color: "L").where(clar: "SI1")
-    weight_group_03_color_M_SI1 = Diamond.where(weight: 0.3).where(color: "M").where(clar: "SI1")
-    
-    weight_group_03_color_D_SI2 = Diamond.where(weight: 0.3).where(color: "D").where(clar: "SI2")
-    weight_group_03_color_E_SI2 = Diamond.where(weight: 0.3).where(color: "E").where(clar: "SI2")
-    weight_group_03_color_F_SI2 = Diamond.where(weight: 0.3).where(color: "F").where(clar: "SI2")
-    weight_group_03_color_G_SI2 = Diamond.where(weight: 0.3).where(color: "G").where(clar: "SI2")
-    weight_group_03_color_H_SI2 = Diamond.where(weight: 0.3).where(color: "H").where(clar: "SI2")
-    weight_group_03_color_I_SI2 = Diamond.where(weight: 0.3).where(color: "I").where(clar: "SI2")
-    weight_group_03_color_J_SI2 = Diamond.where(weight: 0.3).where(color: "J").where(clar: "SI2")
-    weight_group_03_color_K_SI2 = Diamond.where(weight: 0.3).where(color: "K").where(clar: "SI2")
-    weight_group_03_color_L_SI2 = Diamond.where(weight: 0.3).where(color: "L").where(clar: "SI2")
-    weight_group_03_color_M_SI2 = Diamond.where(weight: 0.3).where(color: "M").where(clar: "SI2")
+    # weight_group_03_color_D_VVS1 = Diamond.where(weight: 0.3).where(color: "D").where(clar: "VVS1")
+    # weight_group_03_color_E_VVS1 = Diamond.where(weight: 0.3).where(color: "E").where(clar: "VVS1")
+    # weight_group_03_color_F_VVS1 = Diamond.where(weight: 0.3).where(color: "F").where(clar: "VVS1")
+    # weight_group_03_color_G_VVS1 = Diamond.where(weight: 0.3).where(color: "G").where(clar: "VVS1")
+    # weight_group_03_color_H_VVS1 = Diamond.where(weight: 0.3).where(color: "H").where(clar: "VVS1")
+    # weight_group_03_color_I_VVS1 = Diamond.where(weight: 0.3).where(color: "I").where(clar: "VVS1")
+    # weight_group_03_color_J_VVS1 = Diamond.where(weight: 0.3).where(color: "J").where(clar: "VVS1")
+    # weight_group_03_color_K_VVS1 = Diamond.where(weight: 0.3).where(color: "K").where(clar: "VVS1")
+    # weight_group_03_color_L_VVS1 = Diamond.where(weight: 0.3).where(color: "L").where(clar: "VVS1")
+    # weight_group_03_color_M_VVS1 = Diamond.where(weight: 0.3).where(color: "M").where(clar: "VVS1")
+
     
 
     
@@ -174,13 +142,14 @@ class DiamondsController < ApplicationController
     weight_group_03_color_D_IF_date = weight_group_03_color_D_IF.pluck(:date).uniq
     # binding.pry
     #Price_0.3
-    weight_group_03_color_D_IF_end_price = weight_group_03_color_D_IF.pluck(:end_price)
-    weight_group_03_color_D_VVS1_end_price = weight_group_03_color_D_VVS1.pluck(:end_price)
-    weight_group_03_color_D_VVS2_end_price = weight_group_03_color_D_VVS2.pluck(:end_price)
-    weight_group_03_color_D_VS1_end_price = weight_group_03_color_D_VS1.pluck(:end_price)
-    weight_group_03_color_D_VS2_end_price = weight_group_03_color_D_VS2.pluck(:end_price)
-    weight_group_03_color_D_SI1_end_price = weight_group_03_color_D_SI1.pluck(:end_price)
-    weight_group_03_color_D_SI2_end_price = weight_group_03_color_D_SI2.pluck(:end_price)
+
+    weight_group_03_color_D_IF_end_price = []
+    @daily_weight_group_03_color_D_IF.each do |diamond|
+      weight_group_03_color_D_IF_end_price << diamond.avg_price.round
+    end
+    # binding.pry
+
+
 
 
     
@@ -213,12 +182,12 @@ class DiamondsController < ApplicationController
       
       # f.xAxis(:categories => weight_group_03_color_D_IF_date)
       f.series(:pointInterval => 1.day, :pointStart => @sdate, :name => "0.3_D_IF", :data => weight_group_03_color_D_IF_end_price)
-      f.series(:pointInterval => 1.day, :pointStart => @sdate, :name => "0.3_D_VVS1", :data => weight_group_03_color_D_VVS1_end_price)
-      f.series(:pointInterval => 1.day, :pointStart => @sdate, :name => "0.3_D_VVS2", :data => weight_group_03_color_D_VVS2_end_price)
-      f.series(:pointInterval => 1.day, :pointStart => @sdate, :name => "0.3_D_VS1", :data => weight_group_03_color_D_VS1_end_price)
-      f.series(:pointInterval => 1.day, :pointStart => @sdate, :name => "0.3_D_VS2", :data => weight_group_03_color_D_VS2_end_price)
-      f.series(:pointInterval => 1.day, :pointStart => @sdate, :name => "0.3_D_SI1", :data => weight_group_03_color_D_SI1_end_price)
-      f.series(:pointInterval => 1.day, :pointStart => @sdate, :name => "0.3_D_SI2", :data => weight_group_03_color_D_SI2_end_price)
+      # f.series(:pointInterval => 1.day, :pointStart => @sdate, :name => "0.3_D_VVS1", :data => weight_group_03_color_D_VVS1_end_price)
+      # f.series(:pointInterval => 1.day, :pointStart => @sdate, :name => "0.3_D_VVS2", :data => weight_group_03_color_D_VVS2_end_price)
+      # f.series(:pointInterval => 1.day, :pointStart => @sdate, :name => "0.3_D_VS1", :data => weight_group_03_color_D_VS1_end_price)
+      # f.series(:pointInterval => 1.day, :pointStart => @sdate, :name => "0.3_D_VS2", :data => weight_group_03_color_D_VS2_end_price)
+      # f.series(:pointInterval => 1.day, :pointStart => @sdate, :name => "0.3_D_SI1", :data => weight_group_03_color_D_SI1_end_price)
+      # f.series(:pointInterval => 1.day, :pointStart => @sdate, :name => "0.3_D_SI2", :data => weight_group_03_color_D_SI2_end_price)
       
       
       f.legend(:align => 'right', :verticalAlign => 'top', :y => 75, :x => -50, :layout => 'vertical',)
