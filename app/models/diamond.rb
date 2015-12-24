@@ -1,9 +1,6 @@
 class Diamond < ActiveRecord::Base
  require "date"
-   # latest = Diamond.last
-   # oldest = Diamond.first
-   # latest_date = latest.date
-   # oldest_date = oldest.date
+
    latest_date = Diamond.maximum(:date)
    oldest_date = Diamond.minimum(:date)
    weight_max = Diamond.maximum(:weight)

@@ -1,0 +1,20 @@
+<div class="container">
+	<table class="table table-bordered">
+      <tr>
+        <th>Date</th>
+        <th>Weight</th>
+        <th>Color</th>
+        <th>Clarity</th>
+        <th>Price</th>
+      </tr>
+      <% @daily_weight_group_03_color_D_IF.each do |diamond| %>
+        <tr>
+          <td><%= diamond.date %></td>
+          <td><#%= diamond.weight %></td>
+          <td><%= diamond.color %></td>
+          <td><%= diamond.clar %></td>
+          <td><%= diamond.avg_price.round %></td>
+        </tr>
+      <% end %>
+    </table>
+</div>

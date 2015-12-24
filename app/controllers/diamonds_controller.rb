@@ -3,15 +3,19 @@ class DiamondsController < ApplicationController
     @diamond = Diamond.new
   end
 
+  def group_color(weight, color)
+    "@weight" + weight + "_diamond_group.weight" + weight + ".color(" + "\"" + color + "\"" + ")"
+  end
+
   require "date"
   def index
     # @diamonds = Diamond.all
     #kaminariでページネーション
-    @diamonds = Diamond.page(params[:page])
-    @q = Diamond.ransack(params[:q])
-    @diamonds2 = @q.result(distinct: true)
+    # @diamonds = Diamond.page(params[:page])
+    # @q = Diamond.ransack(params[:q])
+    # @diamonds2 = @q.result(distinct: true)
    
-   weight = [0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1, 1.2, 1.5]
+   weight = ["02", "03", "04", "05", "06", "07", "08", "09", "10", "12", "15", "18", "20", "30", "40"]
    color = ["D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "FIY", "FLY", "FY", "Y-Z"]
    clar = ["IF", "VVS1", "VVS2", "VS1", "VS2", "SI1", "SI2", "I1", "FL"]
    cut_grade = ["Good", "Very Good", "Excellent", "EXC", "VGD", "F"]
@@ -26,12 +30,14 @@ class DiamondsController < ApplicationController
    # @latest_date = @latest.date
    # @old_date = @oldest.date
 
-   latest = Diamond.last
-   oldest = Diamond.first
-   latest_date = latest.date
-   oldest_date = oldest.date
-   date_range =  latest_date - oldest_date
-   three_days_ago = latest_date -3
+   # latest = Diamond.last
+   # oldest = Diamond.first
+   # latest_date = latest.date
+   # oldest_date = oldest.date
+   @latest_date = Diamond.maximum(:date)
+   @oldest_date = Diamond.minimum(:date)
+   date_range =  @latest_date - @oldest_date
+   three_days_ago = @latest_date -3
    # if date_range >= 7
    #     i = 7
    #     one_week_ago = latest_date - i
@@ -67,16 +73,237 @@ class DiamondsController < ApplicationController
     # weight_group_03_color_L_IF = Diamond.date_one_week.weight(0.3).color("L").clar("IF")
     # weight_group_03_color_M_IF = Diamond.date_one_week.weight(0.3).color("M").clar("IF")
 
-    # weight_group_03_color_D_IF = Diamond.date_full_year.weight(0.3).color("D").clar("IF")
-    # weight_group_03_color_E_IF = Diamond.date_full_year.weight(0.3).color("E").clar("IF")
-    # weight_group_03_color_F_IF = Diamond.date_full_year.weight(0.3).color("F").clar("IF")
-    # weight_group_03_color_G_IF = Diamond.date_full_year.weight(0.3).color("G").clar("IF")
-    # weight_group_03_color_H_IF = Diamond.date_full_year.weight(0.3).color("H").clar("IF")
-    # weight_group_03_color_I_IF = Diamond.date_full_year.weight(0.3).color("I").clar("IF")
-    # weight_group_03_color_J_IF = Diamond.date_full_year.weight(0.3).color("J").clar("IF")
-    # weight_group_03_color_K_IF = Diamond.date_full_year.weight(0.3).color("K").clar("IF")
-    # weight_group_03_color_L_IF = Diamond.date_full_year.weight(0.3).color("L").clar("IF")
-    # weight_group_03_color_M_IF = Diamond.date_full_year.weight(0.3).color("M").clar("IF")
+    #最新のDiamond_data
+    @latest_diamond_group = Diamond.where(date: @latest_date)
+    #weightでグループ
+    @weight03_diamond_group = @latest_diamond_group.weight03
+    # @weight04_diamond_group = @latest_diamond_group.weight04
+    # @weight05_diamond_group = @latest_diamond_group.weight05
+    # @weight06_diamond_group = @latest_diamond_group.weight06
+    # @weight07_diamond_group = @latest_diamond_group.weight07
+    # @weight08_diamond_group = @latest_diamond_group.weight08
+    # @weight09_diamond_group = @latest_diamond_group.weight09
+    # @weight10_diamond_group = @latest_diamond_group.weight10
+    # @weight12_diamond_group = @latest_diamond_group.weight12
+    # @weight15_diamond_group = @latest_diamond_group.weight15
+    # @weight18_diamond_group = @latest_diamond_group.weight18
+    # @weight20_diamond_group = @latest_diamond_group.weight20
+    # @weight30_diamond_group = @latest_diamond_group.weight30
+    # @weight40_diamond_group = @latest_diamond_group.weight40
+
+    #colorでグループ
+    # for color_group in color
+    #   name = color_group
+    #   @"#{name}" = @weight03_diamond_group.color("#{color}")
+    # end
+    temp = group_color("03", "D")
+    temp_latest_weight_group_03_color_D = temp.to_i
+    latest_weight_group_03_color_D = @weight03_diamond_group.weight03.color("D")
+    latest_weight_group_03_color_E = @weight03_diamond_group.weight03.color("E")
+    latest_weight_group_03_color_F = @weight03_diamond_group.weight03.color("F")
+    latest_weight_group_03_color_G = @weight03_diamond_group.weight03.color("G")
+    latest_weight_group_03_color_H = @weight03_diamond_group.weight03.color("H")
+    latest_weight_group_03_color_I = @weight03_diamond_group.weight03.color("I")
+    latest_weight_group_03_color_J = @weight03_diamond_group.weight03.color("J")
+    latest_weight_group_03_color_K = @weight03_diamond_group.weight03.color("K")
+    latest_weight_group_03_color_L = @weight03_diamond_group.weight03.color("L")
+    latest_weight_group_03_color_M = @weight03_diamond_group.weight03.color("M")
+
+    @latest_weight_group_03_color_D_clar = latest_weight_group_03_color_D.select('date, color, clar, AVG(end_price * 0.3 / weight) AS avg_price').group(:clar)
+    @latest_weight_group_03_color_E_clar = latest_weight_group_03_color_E.select('date, color, clar, AVG(end_price * 0.3 / weight) AS avg_price').group(:clar)
+    @latest_weight_group_03_color_F_clar = latest_weight_group_03_color_F.select('date, color, clar, AVG(end_price * 0.3 / weight) AS avg_price').group(:clar)
+    @latest_weight_group_03_color_G_clar = latest_weight_group_03_color_G.select('date, color, clar, AVG(end_price * 0.3 / weight) AS avg_price').group(:clar)
+    @latest_weight_group_03_color_H_clar = latest_weight_group_03_color_H.select('date, color, clar, AVG(end_price * 0.3 / weight) AS avg_price').group(:clar)
+    @latest_weight_group_03_color_I_clar = latest_weight_group_03_color_I.select('date, color, clar, AVG(end_price * 0.3 / weight) AS avg_price').group(:clar)
+    @latest_weight_group_03_color_J_clar = latest_weight_group_03_color_J.select('date, color, clar, AVG(end_price * 0.3 / weight) AS avg_price').group(:clar)
+    @latest_weight_group_03_color_K_clar = latest_weight_group_03_color_K.select('date, color, clar, AVG(end_price * 0.3 / weight) AS avg_price').group(:clar)
+    @latest_weight_group_03_color_L_clar = latest_weight_group_03_color_L.select('date, color, clar, AVG(end_price * 0.3 / weight) AS avg_price').group(:clar)
+    @latest_weight_group_03_color_M_clar = latest_weight_group_03_color_M.select('date, color, clar, AVG(end_price * 0.3 / weight) AS avg_price').group(:clar)
+
+    # @latest_weight_group_03_color_D_clar_IF = @latest_weight_group_03_color_D_clar.where(clar: "IF").select(:avg_price)
+    @weight_group_03_color_D_price_clar = []
+    @weight_group_03_color_E_price_clar = []
+    @weight_group_03_color_F_price_clar = []
+    @weight_group_03_color_G_price_clar = []
+    @weight_group_03_color_H_price_clar = []
+    @weight_group_03_color_I_price_clar = []
+    @weight_group_03_color_J_price_clar = []
+    @weight_group_03_color_K_price_clar = []
+    @weight_group_03_color_L_price_clar = []
+    @weight_group_03_color_M_price_clar = []
+
+    @weight_group_03_color_D_price_latest = []
+    @weight_group_03_color_E_price_latest = []
+    @weight_group_03_color_F_price_latest = []
+    @weight_group_03_color_G_price_latest = []
+    @weight_group_03_color_H_price_latest = []
+    @weight_group_03_color_I_price_latest = []
+    @weight_group_03_color_J_price_latest = []
+    @weight_group_03_color_K_price_latest = []
+    @weight_group_03_color_L_price_latest = []
+    @weight_group_03_color_M_price_latest = []
+
+    @latest_weight_group_03_color_D_clar.each do |diamond|
+      @weight_group_03_color_D_price_clar << diamond.clar
+      @weight_group_03_color_D_price_latest << diamond.avg_price.round
+    end
+
+    @latest_weight_group_03_color_E_clar.each do |diamond|
+      @weight_group_03_color_E_price_clar << diamond.clar
+      @weight_group_03_color_E_price_latest << diamond.avg_price.round
+    end
+
+    @latest_weight_group_03_color_F_clar.each do |diamond|
+      @weight_group_03_color_F_price_clar << diamond.clar
+      @weight_group_03_color_F_price_latest << diamond.avg_price.round
+    end
+
+    @latest_weight_group_03_color_G_clar.each do |diamond|
+      @weight_group_03_color_G_price_clar << diamond.clar
+      @weight_group_03_color_G_price_latest << diamond.avg_price.round
+    end
+
+    @latest_weight_group_03_color_H_clar.each do |diamond|
+      @weight_group_03_color_H_price_clar << diamond.clar
+      @weight_group_03_color_H_price_latest << diamond.avg_price.round
+    end
+
+    @latest_weight_group_03_color_I_clar.each do |diamond|
+      @weight_group_03_color_I_price_clar << diamond.clar
+      @weight_group_03_color_I_price_latest << diamond.avg_price.round
+    end
+
+    @latest_weight_group_03_color_J_clar.each do |diamond|
+      @weight_group_03_color_J_price_clar << diamond.clar
+      @weight_group_03_color_J_price_latest << diamond.avg_price.round
+    end
+
+    @latest_weight_group_03_color_K_clar.each do |diamond|
+      @weight_group_03_color_K_price_clar << diamond.clar
+      @weight_group_03_color_K_price_latest << diamond.avg_price.round
+    end
+
+    @latest_weight_group_03_color_L_clar.each do |diamond|
+      @weight_group_03_color_L_price_clar << diamond.clar
+      @weight_group_03_color_L_price_latest << diamond.avg_price.round
+    end
+
+    @latest_weight_group_03_color_M_clar.each do |diamond|
+      @weight_group_03_color_M_price_clar << diamond.clar
+      @weight_group_03_color_M_price_latest << diamond.avg_price.round
+    end
+
+
+    arr_D_clar_price = [@weight_group_03_color_D_price_clar, @weight_group_03_color_D_price_latest].transpose
+    h_D_clar_price = Hash[*arr_D_clar_price.flatten]
+
+    arr_E_clar_price = [@weight_group_03_color_E_price_clar, @weight_group_03_color_E_price_latest].transpose
+    h_E_clar_price = Hash[*arr_E_clar_price.flatten]
+
+    arr_F_clar_price = [@weight_group_03_color_F_price_clar, @weight_group_03_color_F_price_latest].transpose
+    h_F_clar_price = Hash[*arr_F_clar_price.flatten]
+
+    arr_G_clar_price = [@weight_group_03_color_G_price_clar, @weight_group_03_color_G_price_latest].transpose
+    h_G_clar_price = Hash[*arr_G_clar_price.flatten]
+
+    arr_H_clar_price = [@weight_group_03_color_H_price_clar, @weight_group_03_color_H_price_latest].transpose
+    h_H_clar_price = Hash[*arr_H_clar_price.flatten]
+
+    arr_I_clar_price = [@weight_group_03_color_I_price_clar, @weight_group_03_color_I_price_latest].transpose
+    h_I_clar_price = Hash[*arr_I_clar_price.flatten]
+
+    arr_J_clar_price = [@weight_group_03_color_J_price_clar, @weight_group_03_color_J_price_latest].transpose
+    h_J_clar_price = Hash[*arr_J_clar_price.flatten]
+
+    arr_K_clar_price = [@weight_group_03_color_K_price_clar, @weight_group_03_color_K_price_latest].transpose
+    h_K_clar_price = Hash[*arr_K_clar_price.flatten]
+
+    arr_L_clar_price = [@weight_group_03_color_L_price_clar, @weight_group_03_color_L_price_latest].transpose
+    h_L_clar_price = Hash[*arr_L_clar_price.flatten]
+
+    arr_M_clar_price = [@weight_group_03_color_M_price_clar, @weight_group_03_color_M_price_latest].transpose
+    h_M_clar_price = Hash[*arr_M_clar_price.flatten]
+
+    @D_IF_price = h_D_clar_price["IF"]
+    @D_VVS1_price = h_D_clar_price["VVS1"]
+    @D_VVS2_price = h_D_clar_price["VVS2"]
+    @D_VS1_price = h_D_clar_price["VS1"]
+    @D_VS2_price = h_D_clar_price["VS2"]
+    @D_SI1_price = h_D_clar_price["SI1"]
+    @D_SI2_price = h_D_clar_price["SI2"]
+
+    @E_IF_price = h_E_clar_price["IF"]
+    @E_VVS1_price = h_E_clar_price["VVS1"]
+    @E_VVS2_price = h_E_clar_price["VVS2"]
+    @E_VS1_price = h_E_clar_price["VS1"]
+    @E_VS2_price = h_E_clar_price["VS2"]
+    @E_SI1_price = h_E_clar_price["SI1"]
+    @E_SI2_price = h_E_clar_price["SI2"]
+
+    @F_IF_price = h_F_clar_price["IF"]
+    @F_VVS1_price = h_F_clar_price["VVS1"]
+    @F_VVS2_price = h_F_clar_price["VVS2"]
+    @F_VS1_price = h_F_clar_price["VS1"]
+    @F_VS2_price = h_F_clar_price["VS2"]
+    @F_SI1_price = h_F_clar_price["SI1"]
+    @F_SI2_price = h_F_clar_price["SI2"]
+
+    @G_IF_price = h_G_clar_price["IF"]
+    @G_VVS1_price = h_G_clar_price["VVS1"]
+    @G_VVS2_price = h_G_clar_price["VVS2"]
+    @G_VS1_price = h_G_clar_price["VS1"]
+    @G_VS2_price = h_G_clar_price["VS2"]
+    @G_SI1_price = h_G_clar_price["SI1"]
+    @G_SI2_price = h_G_clar_price["SI2"]
+
+    @H_IF_price = h_H_clar_price["IF"]
+    @H_VVS1_price = h_H_clar_price["VVS1"]
+    @H_VVS2_price = h_H_clar_price["VVS2"]
+    @H_VS1_price = h_H_clar_price["VS1"]
+    @H_VS2_price = h_H_clar_price["VS2"]
+    @H_SI1_price = h_H_clar_price["SI1"]
+    @H_SI2_price = h_H_clar_price["SI2"]
+
+    @I_IF_price = h_I_clar_price["IF"]
+    @I_VVS1_price = h_I_clar_price["VVS1"]
+    @I_VVS2_price = h_I_clar_price["VVS2"]
+    @I_VS1_price = h_I_clar_price["VS1"]
+    @I_VS2_price = h_I_clar_price["VS2"]
+    @I_SI1_price = h_I_clar_price["SI1"]
+    @I_SI2_price = h_I_clar_price["SI2"]
+
+    @J_IF_price = h_J_clar_price["IF"]
+    @J_VVS1_price = h_J_clar_price["VVS1"]
+    @J_VVS2_price = h_J_clar_price["VVS2"]
+    @J_VS1_price = h_J_clar_price["VS1"]
+    @J_VS2_price = h_J_clar_price["VS2"]
+    @J_SI1_price = h_J_clar_price["SI1"]
+    @J_SI2_price = h_J_clar_price["SI2"]
+
+    @K_IF_price = h_K_clar_price["IF"]
+    @K_VVS1_price = h_K_clar_price["VVS1"]
+    @K_VVS2_price = h_K_clar_price["VVS2"]
+    @K_VS1_price = h_K_clar_price["VS1"]
+    @K_VS2_price = h_K_clar_price["VS2"]
+    @K_SI1_price = h_K_clar_price["SI1"]
+    @K_SI2_price = h_K_clar_price["SI2"]
+
+    @L_IF_price = h_L_clar_price["IF"]
+    @L_VVS1_price = h_L_clar_price["VVS1"]
+    @L_VVS2_price = h_L_clar_price["VVS2"]
+    @L_VS1_price = h_L_clar_price["VS1"]
+    @L_VS2_price = h_L_clar_price["VS2"]
+    @L_SI1_price = h_L_clar_price["SI1"]
+    @L_SI2_price = h_L_clar_price["SI2"]
+
+    @M_IF_price = h_M_clar_price["IF"]
+    @M_VVS1_price = h_M_clar_price["VVS1"]
+    @M_VVS2_price = h_M_clar_price["VVS2"]
+    @M_VS1_price = h_M_clar_price["VS1"]
+    @M_VS2_price = h_M_clar_price["VS2"]
+    @M_SI1_price = h_M_clar_price["SI1"]
+    @M_SI2_price = h_M_clar_price["SI2"]
+ 
 
     weight_group_03_color_D_IF = Diamond.date_one_week.weight03.color("D").clar("IF")
     weight_group_03_color_E_IF = Diamond.date_one_week.weight03.color("E").clar("IF")
@@ -139,7 +366,12 @@ class DiamondsController < ApplicationController
     
     #0.3_All
     #Date
-    weight_group_03_color_D_IF_date = weight_group_03_color_D_IF.pluck(:date).uniq
+    # weight_group_03_color_D_IF_date = weight_group_03_color_D_IF.pluck(:date).uniq
+    weight_group_03_color_D_IF_date = []
+    @daily_weight_group_03_color_D_IF.each do |diamond|
+      weight_group_03_color_D_IF_date << diamond.date
+    end
+
     # binding.pry
     #Price_0.3
 

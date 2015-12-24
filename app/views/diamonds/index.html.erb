@@ -1,36 +1,8 @@
 <h1>Diamonds#index</h1>
 <div class="container">
-    <div id="diamonds-chart" class="user_chart">
-        <%= high_chart("diamonds-chart", @chart) %>
-    </div>
+   
+    <%= render 'diamond_chart' %>  
     
-    <p>チャートをカスタマイズして表示</p>
-            <%= search_form_for(@q, url: diamonds_chart_path, method: :get) do |f| %>
-                <div>
-                    <%= f.label :weight, "カラット" %>
-                    <%= f.select :weight, {"0.3" => 0.3, "0.4" => 0.4, "0.5" => 0.5, "0.6" => 0.6,
-                                         "0.7" => 0.7, "0.8" => 0.8, "0.9" => 0.9, "1.0" => 1, 
-                                         "1.2" =>  1.2, "1.5" => 1.5} %>
-                </div>
-                <div>
-                    <%= f.label :color, "カラー" %>
-                    <%= f.select :color, {"全て" => "all", "D" => "D", "E" => "E", "F" => "F", "G" => "G",
-                                         "H" => "H", "I" => "I", "J" => "J", "K" => "K", 
-                                         "L" => "L", "M" => "M"} %>
-                </div>
-                <div>
-                    <%= f.label :clar, "クオリティ" %>
-                    <%= f.select :clar, {"全て" => "all", "IF" => "IF", "VVS1" => "VVS1", "VVS2" => "VVS2",
-                                         "VS1" => "VS1", "VS2" => "VS2", "SI1" => "SI1", "SI2" => "SI2"} %>
-                </div>
-                <div>
-                     <%= f.label :date, "表示期間" %>
-                     <%= f.select :date, {"1ヶ月" => "1m", "3ヶ月" => "3m", "6ヶ月" => "6m", "9ヶ月" => "9m",
-                                         "1年" => "1y", "最大" => "max"} %>
-                </div>
-            
-                <%= f.submit "チャートを表示" %>
-            <% end %>
     
 
     <div>
@@ -39,25 +11,13 @@
     <div>
         <#%= paginate @diamonds %>
     </div>
-    <<div>
+    <div>
       <%=  %>
     </div>
-    <table class="table table-bordered">
-      <tr>
-        <th>Date</th>
-        <th>Weight</th>
-        <th>Color</th>
-        <th>Clarity</th>
-        <th>Price</th>
-      </tr>
-      <% @daily_weight_group_03_color_D_IF.each do |diamond| %>
-        <tr>
-          <td><%= diamond.date %></td>
-          <td><#%= diamond.weight %></td>
-          <td><%= diamond.color %></td>
-          <td><%= diamond.clar %></td>
-          <td><%= diamond.avg_price.round %></td>
-        </tr>
-      <% end %>
-    </table>
+    
+     <%= render 'diamond_price_history' %>  
+    
+     <%= render 'diamond_market' %>  
+
+
 </div>
