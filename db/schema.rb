@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151203212117) do
+ActiveRecord::Schema.define(version: 20160107204532) do
 
   create_table "diamonds", force: :cascade do |t|
     t.date     "date"
@@ -33,6 +33,18 @@ ActiveRecord::Schema.define(version: 20151203212117) do
     t.string   "symmetry"
     t.string   "fluorescen"
     t.string   "certificate_id"
+  end
+
+  create_table "tables", force: :cascade do |t|
+    t.date     "date"
+    t.float    "weight"
+    t.string   "color"
+    t.string   "clar"
+    t.float    "usd_price"
+    t.float    "jpy_price"
+    t.float    "ex_rate"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
