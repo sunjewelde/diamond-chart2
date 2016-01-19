@@ -89,6 +89,42 @@ class Diamond < ActiveRecord::Base
 	# @symmetry_all = Diamond.select(:symmetry).distinct.order(:symmetry)
 	# @fluorescen_all = Diamond.select(:fluorescen).distinct.order(:fluorescen)
 
+  def self.import(file)
+    open(file.path, 'r:cp932:utf-8', undef: :replace) do |f|
+        csv = CSV.new(f, :headers => :first_row)
+        csv.each do |row|
+          next if row.header_row?
+
+    # CSVの行情報をHASHに変換
+          table = Hash[[row.headers, row.fields].transpose]
+
+    # 登録済みデータ情報取得。
+          # 登録されてなければ作成
+          diamond = find_by(:date => table["date"])
+          if diamond.nil?
+            user = new
+          end
+
+          diamond.attributes = table.to_hash.slice(*updatable_attributes)
+          # 保存する
+    #   diamond.save!
+
+    # CSV.foreach(file.path, headers: true) do |row|
+    #   # Dateが見つかれば、レコードを呼び出し、見つかれなければ、新しく作成
+    #   diamond = find_by(date: row["date"]) || new
+    #   # CSVからデータを取得し、設定する
+    #   diamond.attributes = row.to_hash.slice(*updatable_attributes)
+    #   # 保存する
+    #   diamond.save!
+      end
+    end
+  end
+
+  # 更新を許可するカラムを定義
+  def self.updatable_attributes
+    ["date", "color", "clar", "end_price"]
+  end
+
 end
 
 

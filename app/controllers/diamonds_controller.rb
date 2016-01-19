@@ -7,6 +7,12 @@ class DiamondsController < ApplicationController
     "@weight" + weight + "_diamond_group.weight" + weight + ".color(" + "\"" + color + "\"" + ")"
   end
 
+  def import
+     # fileはtmpに自動で一時保存される
+    Diamond.import(params[:csv_file])
+    redirect_to root_url, notice: "Diamondデータを追加しました。"
+  end
+
   require "date"
   def index
     # @diamonds = Diamond.all
