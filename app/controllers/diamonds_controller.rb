@@ -417,6 +417,7 @@ class DiamondsController < ApplicationController
       f.title(:text => "Diamond Price Chart")
       
       f.xAxis(:type => 'datetime', :dateTimeLabelFormats => { month: '%b %e, %Y' })
+      f.yAxis(:title => { text: 'Diamond Price($)' })
       
       # f.xAxis(:categories => weight_group_03_color_D_IF_date)
       f.series(:pointInterval => 1.day, :pointStart => @sdate, :name => "0.3_D_IF", :data => weight_group_03_color_D_IF_end_price)
@@ -428,7 +429,8 @@ class DiamondsController < ApplicationController
       # f.series(:pointInterval => 1.day, :pointStart => @sdate, :name => "0.3_D_SI2", :data => weight_group_03_color_D_SI2_end_price)
       
       
-      f.legend(:align => 'right', :verticalAlign => 'top', :y => 75, :x => -50, :layout => 'vertical',)
+      f.legend(:align => 'right', :verticalAlign => 'top', :y => 0, :x => -50, :layout => 'vertical',)
+      f.chart(type: 'line', height: 600, marginLeft: 50, marginRight: 50)
       # f.chart({:defaultSeriesType=>"column"})
     end
     
@@ -1235,6 +1237,7 @@ class DiamondsController < ApplicationController
           
           
           f.legend(:align => 'right', :verticalAlign => 'top', :y => 75, :x => -50, :layout => 'vertical',)
+       
           # f.chart({:defaultSeriesType=>"column"})
     
         elsif color != "all" and clar == "all"
@@ -1250,12 +1253,14 @@ class DiamondsController < ApplicationController
           f.series(:name => "#{color}_SI2", :data => si2_end_price)
           
           f.legend(:align => 'right', :verticalAlign => 'top', :y => 75, :x => -50, :layout => 'vertical',)
+   
         elsif  color != "all" and clar != "all"
           f.title(:text => "Diamond Price Chart #{weight}カラット")
           f.xAxis(:categories => group_IF_date)
           
           f.series(:name => "#{color}_#{clar}", :data => clar_end_price)
           f.legend(:align => 'right', :verticalAlign => 'top', :y => 75, :x => -50, :layout => 'vertical',)
+      
       end
     end  
     
