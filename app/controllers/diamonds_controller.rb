@@ -414,7 +414,7 @@ class DiamondsController < ApplicationController
       f.global(useUTC: false)
       @sdate = weight_group_03_color_D_IF_date.find.first
       # binding.pry
-      f.title(:text => "Diamond Price Chart")
+      f.title(:text => "Diamond Price Chart (0.3カラット Latest one week)")
       
       f.xAxis(:type => 'datetime', :dateTimeLabelFormats => { month: '%b %e, %Y' })
       f.yAxis(:title => { text: 'Diamond Price($)' })
@@ -1145,6 +1145,7 @@ class DiamondsController < ApplicationController
         #カラット別で表示
           f.title(:text => "Diamond Price Chart #{weight}カラット")
           f.xAxis(:categories => group_IF_date)
+          f.yAxis(:title => { text: 'Diamond Price($)' })
           #D_
           f.series(:name => "D_IF", :data => color_D_IF_end_price)
           f.series(:name => "D_VVS1", :data => color_D_VVS1_end_price)
@@ -1237,12 +1238,13 @@ class DiamondsController < ApplicationController
           
           
           f.legend(:align => 'right', :verticalAlign => 'top', :y => 75, :x => -50, :layout => 'vertical',)
-       
+          f.chart(type: 'line', height: 600)
           # f.chart({:defaultSeriesType=>"column"})
     
         elsif color != "all" and clar == "all"
           f.title(:text => "Diamond Price Chart #{weight}カラット")
           f.xAxis(:categories => group_IF_date)
+          f.yAxis(:title => { text: 'Diamond Price($)' })
           
           f.series(:name => "#{color}_IF", :data => if_end_price)
           f.series(:name => "#{color}_VVS1", :data => if_end_price)
@@ -1253,13 +1255,16 @@ class DiamondsController < ApplicationController
           f.series(:name => "#{color}_SI2", :data => si2_end_price)
           
           f.legend(:align => 'right', :verticalAlign => 'top', :y => 75, :x => -50, :layout => 'vertical',)
+          f.chart(type: 'line', height: 600)
    
         elsif  color != "all" and clar != "all"
           f.title(:text => "Diamond Price Chart #{weight}カラット")
           f.xAxis(:categories => group_IF_date)
+          f.yAxis(:title => { text: 'Diamond Price($)' })
           
           f.series(:name => "#{color}_#{clar}", :data => clar_end_price)
           f.legend(:align => 'right', :verticalAlign => 'top', :y => 75, :x => -50, :layout => 'vertical',)
+          f.chart(type: 'line', height: 600)
       
       end
     end  

@@ -73,6 +73,16 @@ p {
   margin: 0 auto;
 }
 
+/* table */
+.user_table{
+  table-layout: auto;
+  width: 100%;
+}
+
+.user_width_1{
+  width: 600px;
+}
+
 /* user_margin */
 .user_margin_1{
   margin-top: 30px;
@@ -81,8 +91,5 @@ p {
 .use_margin_2{
   margin-bottom: 30px;
 }
-// .user_chart{
-//   width: 800px;
-//   height: 600px;
-// }
+
 
