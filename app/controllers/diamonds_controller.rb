@@ -31,53 +31,12 @@ class DiamondsController < ApplicationController
                  "st", "sb", "str blue", "S.BLUE", "M.BLUE", "VST", "Very Strong", "V.S.BLUE", "FT"]
 
    #最新旧の日付を取得
-   # @latest = Diamond.last
-   # @oldest = Diamond.first
-   # @latest_date = @latest.date
-   # @old_date = @oldest.date
-
-   # latest = Diamond.last
-   # oldest = Diamond.first
-   # latest_date = latest.date
-   # oldest_date = oldest.date
    @latest_date = Diamond.maximum(:date)
    @oldest_date = Diamond.minimum(:date)
    date_range =  @latest_date - @oldest_date
    three_days_ago = @latest_date -3
-   # if date_range >= 7
-   #     i = 7
-   #     one_week_ago = latest_date - i
-   #     if one_week_ago.presnt?
-   #        owa = one_week_ago
-   #     else
-   #      i = i + 1
-   # end
-   # end
-   
- 
-   # @date_all = Diamond.select(:date).distinct.order(:date)
-
-   # date_all = Diamond.pluck(:date).uniq.sort
-   # weight_all = Diamond.pluck(:weight).uniq.sort
-   # color_all = Diamond.pluck(:color).uniq
-   # clar_all = Diamond.pluck(:clar).uniq
-   # cut_grade_all = Diamond.pluck(:cut_grade).uniq
-   # polish_all = Diamond.pluck(:polish).uniq
-   # symmetry_all = Diamond.pluck(:symmetry).uniq
-   # fluorescen_all = Diamond.pluck(:fluorescen).uniq
 
    # binding.pry
-  
-    # weight_group_03_color_D_IF = Diamond.date_one_week.weight(0.3).color("D").clar("IF")
-    # weight_group_03_color_E_IF = Diamond.date_one_week.weight(0.3).color("E").clar("IF")
-    # weight_group_03_color_F_IF = Diamond.date_one_week.weight(0.3).color("F").clar("IF")
-    # weight_group_03_color_G_IF = Diamond.date_one_week.weight(0.3).color("G").clar("IF")
-    # weight_group_03_color_H_IF = Diamond.date_one_week.weight(0.3).color("H").clar("IF")
-    # weight_group_03_color_I_IF = Diamond.date_one_week.weight(0.3).color("I").clar("IF")
-    # weight_group_03_color_J_IF = Diamond.date_one_week.weight(0.3).color("J").clar("IF")
-    # weight_group_03_color_K_IF = Diamond.date_one_week.weight(0.3).color("K").clar("IF")
-    # weight_group_03_color_L_IF = Diamond.date_one_week.weight(0.3).color("L").clar("IF")
-    # weight_group_03_color_M_IF = Diamond.date_one_week.weight(0.3).color("M").clar("IF")
 
     #最新のDiamond_data
     @latest_diamond_group = Diamond.where(date: @latest_date)
@@ -102,8 +61,8 @@ class DiamondsController < ApplicationController
     #   name = color_group
     #   @"#{name}" = @weight03_diamond_group.color("#{color}")
     # end
-    temp = group_color("03", "D")
-    temp_latest_weight_group_03_color_D = temp.to_i
+    # temp = group_color("03", "D")
+    # temp_latest_weight_group_03_color_D = temp.to_i
     latest_weight_group_03_color_D = @weight03_diamond_group.weight03.color("D")
     latest_weight_group_03_color_E = @weight03_diamond_group.weight03.color("E")
     latest_weight_group_03_color_F = @weight03_diamond_group.weight03.color("F")
@@ -125,6 +84,16 @@ class DiamondsController < ApplicationController
     @latest_weight_group_03_color_K_clar = latest_weight_group_03_color_K.select('date, color, clar, AVG(end_price * 0.3 / weight) AS avg_price').group(:clar)
     @latest_weight_group_03_color_L_clar = latest_weight_group_03_color_L.select('date, color, clar, AVG(end_price * 0.3 / weight) AS avg_price').group(:clar)
     @latest_weight_group_03_color_M_clar = latest_weight_group_03_color_M.select('date, color, clar, AVG(end_price * 0.3 / weight) AS avg_price').group(:clar)
+
+    @latest_weight_group_03_all_color = @weight03_diamond_group.select('date, color, clar, AVG(end_price * 0.3 / weight) AS avg_price').group(:date, :color, :clar)
+
+    @latest_weight_group_03_all_color.each do |diamond|
+        if diamond.color == ("IF" || "VVS1" || "VVS2" || "VS1" || "VS2" || "SI1" || "SI2") and 
+            diamond.color == ("D" || "E" || "F" || "G" || "H" || "I" || "J" || "K" || "L" || "M")
+             List.create(date: diamond.date, color: diamond.color )
+        end
+    end
+   
 
     # @latest_weight_group_03_color_D_clar_IF = @latest_weight_group_03_color_D_clar.where(clar: "IF").select(:avg_price)
     @weight_group_03_color_D_price_clar = []
