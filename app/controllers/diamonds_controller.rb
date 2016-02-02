@@ -357,22 +357,6 @@ class DiamondsController < ApplicationController
     # binding.pry
 
 
-
-
-    
-    # require "date"
-    # require 'time'
-    # sdate = weight_group_03_color_D_IF_date
-    # sdate.each do |str|
-    # #   # @date = DateTime.parse(str)
-    # #   @date = Date.strptime(str)
-    # @date = Date.parse(date).strftime("%d/%m/%Y %H:%M")
-    # end
-    
-    # dt = []
-    # sdate.flatten.each do |date|
-    #   dt << DateTime.parse(date).strftime("%d/%m/%Y %H:%M")
-    # end
     
     
     
